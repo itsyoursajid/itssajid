@@ -2,11 +2,26 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <title>Redirecting...</title>
     <script>
-      // Redirect all 404s to root with original path as query
-      var redirect = window.location.pathname;
-      window.location.replace("/?" + redirect);
+      // GitHub Pages 404 redirect
+      var segmentCount = 1;
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + 
+        (l.port ? ':' + l.port : '') + 
+        '/' + 
+        Array.from(Array(segmentCount).keys()).map(
+          i => '../'
+        ).join('') + 
+        '?p=/' + 
+        l.pathname.slice(1).split('/').slice(segmentCount).join('/') + 
+        (l.search ? '&' + l.search.slice(1) : '') + 
+        l.hash
+      );
     </script>
   </head>
-  <body></body>
+  <body>
+    <h1>Redirecting...</h1>
+  </body>
 </html>
