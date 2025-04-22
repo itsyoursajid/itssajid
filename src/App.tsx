@@ -13,20 +13,24 @@ import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ContactPage from './pages/ContactPage';
 
-function RedirectFromQuery() {
-  const location = useLocation();
+function HashRedirect() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const queryPath = queryParams.get('p') || queryParams.get('') || '';
-    
-    if (queryPath && queryPath !== location.pathname) {
-      navigate(queryPath.startsWith('/') ? queryPath : `/${queryPath}`, { 
-        replace: true 
-      });
+    // Check if the URL has a hash (from our 404 redirect)
+    if (window.location.hash) {
+      const hashPath = window.location.hash.substring(1); // Remove the #
+      
+      // Only navigate if the hash path is different from current path
+      if (hashPath !== location.pathname) {
+        navigate(hashPath, { replace: true });
+      }
+      
+      // Remove the hash from URL
+      window.history.replaceState(null, '', window.location.pathname);
     }
-  }, [location.pathname, navigate]);
+  }, [navigate, location.pathname]);
 
   return null;
 }
@@ -34,7 +38,7 @@ function RedirectFromQuery() {
 function App() {
   return (
     <Router>
-      <RedirectFromQuery />
+      <HashRedirect />
       <div className="min-h-screen bg-gray-900 text-white">
         <Navbar />
         <main>

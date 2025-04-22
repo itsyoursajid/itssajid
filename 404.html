@@ -2,26 +2,20 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Redirecting...</title>
     <script>
-      // GitHub Pages 404 redirect
-      var segmentCount = 1;
-      var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + 
-        (l.port ? ':' + l.port : '') + 
-        '/' + 
-        Array.from(Array(segmentCount).keys()).map(
-          i => '../'
-        ).join('') + 
-        '?p=/' + 
-        l.pathname.slice(1).split('/').slice(segmentCount).join('/') + 
-        (l.search ? '&' + l.search.slice(1) : '') + 
-        l.hash
-      );
+      // Capture the path and redirect to index.html with hash
+      const path = window.location.pathname;
+      const search = window.location.search;
+      const hash = window.location.hash;
+      
+      // Redirect to index.html with the path as a hash
+      window.location.href = '/#' + path + search + hash;
     </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/" />
+    </noscript>
   </head>
   <body>
-    <h1>Redirecting...</h1>
+    <p>Redirecting...</p>
   </body>
 </html>
