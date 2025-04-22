@@ -13,24 +13,20 @@ import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ContactPage from './pages/ContactPage';
 
-function HashRedirect() {
+function RedirectHandler() {
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // Check if the URL has a hash (from our 404 redirect)
-    if (window.location.hash) {
-      const hashPath = window.location.hash.substring(1); // Remove the #
-      
-      // Only navigate if the hash path is different from current path
-      if (hashPath !== location.pathname) {
-        navigate(hashPath, { replace: true });
+    // Check for redirect path in sessionStorage
+    const redirectPath = sessionStorage.getItem('redirectPath');
+    if (redirectPath) {
+      sessionStorage.removeItem('redirectPath');
+      if (redirectPath !== location.pathname + location.search + location.hash) {
+        navigate(redirectPath, { replace: true });
       }
-      
-      // Remove the hash from URL
-      window.history.replaceState(null, '', window.location.pathname);
     }
-  }, [navigate, location.pathname]);
+  }, [navigate, location]);
 
   return null;
 }
@@ -38,7 +34,7 @@ function HashRedirect() {
 function App() {
   return (
     <Router>
-      <HashRedirect />
+      <RedirectHandler />
       <div className="min-h-screen bg-gray-900 text-white">
         <Navbar />
         <main>
