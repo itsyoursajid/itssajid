@@ -6,3 +6,4 @@ export default defineConfig({
 	base: "/itssajid/", // 👈 add this line!
 	plugins: [react()],
 });
+
