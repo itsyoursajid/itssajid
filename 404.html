@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="refresh" content="0; URL=/" />
+    <meta charset="UTF-8" />
+    <script>
+      // Redirect all 404s to root with original path as query
+      var redirect = window.location.pathname;
+      window.location.replace("/?" + redirect);
+    </script>
   </head>
   <body></body>
 </html>

@@ -5,7 +5,13 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // For PC and most mobile browsers
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
+    // iOS Safari specific fix (delayed scroll reset)
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
   }, [pathname]);
 
   return null;
